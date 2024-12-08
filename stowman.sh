@@ -17,9 +17,12 @@ stowcmd="stow -d $DOTDIR -t $HOME -v"
 gitcmd="git -C $DOTDIR"
 
 function push() {
+
     eval "$gitcmd add ."
-    eval "$gitcmd commit -am changes"
-    eval "$gitcmd push"
+    msg="$1" || eval "$gitcmd status --porcelain | awk '{print $2}' | cut -d'/' -f1-2 | sort -u | xargs"
+    echo "$msg"
+    # eval "$gitcmd commit -am '$msg'"
+    # eval "$gitcmd push"
 }
 
 function maybeCreateDir() {
@@ -169,7 +172,7 @@ add)
     add "$2" "$3"
     ;;
 push)
-    push
+    push "$2"
     ;;
 pull)
     pull
