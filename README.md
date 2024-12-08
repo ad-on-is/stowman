@@ -3,12 +3,12 @@
 ```bash
    _==_ _
  _,(",)|_|
-  \/. \-|   STOWMAN
+  \/. \-|   stowman.sh
 __( :  )|_  Manage your dotfiles easily.
 
 ```
 
-STOWMAN lets you easily manage your dotfiles using git and GNU stow.
+stowman.sh lets you easily manage your dotfiles using git and GNU stow.
 
 ## Usage
 
@@ -21,7 +21,7 @@ STOWMAN lets you easily manage your dotfiles using git and GNU stow.
 
 ### On another maschine
 
-- Run `stowman.sh init<repo>`
+- Run `stowman.sh init <repo>`
 - Reload the config by using `stowman.sh reload`
 
 ### Syncing changes

@@ -101,7 +101,7 @@ function help() {
     cat <<EOF
    _==_ _
  _,(",)|_|
-  \/. \-|   STOWMAN
+  \/. \-|   stowman.sh
 __( :  )|_  Manage your dotfiles easily.
 
 EOF
