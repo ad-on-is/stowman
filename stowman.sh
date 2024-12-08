@@ -11,8 +11,8 @@ PINK='\033[0;35m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-if [[ -n "$STOWMAN_DOTDIR" ]]; then
-    DOTDIR="$STOWMAN_DOTDIR"
+if [[ -n "${STOWMAN_DOTDIR}" ]]; then
+    DOTDIR="${STOWMAN_DOTDIR}"
 fi
 
 stowcmd="stow -d $DOTDIR -t $HOME -v"
