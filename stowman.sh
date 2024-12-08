@@ -12,11 +12,11 @@ NC='\033[0m'
 CUR_DIR=$(pwd)
 
 function push() {
-    cd "$DOTDIR" || exit
+    cd "$DOTDIR" || return
     git add .
     git commit -am "changes"
     git push
-    cd "$CUR_DIR" || exit
+    cd "$CUR_DIR" || return
 }
 
 function maybeCreateDir() {
@@ -29,15 +29,15 @@ function init() {
         return
     fi
     maybeCreateDir
-    cd "$DOTDIR" || exit
+    cd "$DOTDIR" || return
     git clone "$1"
-    cd "$CUR_DIR" || exit
+    cd "$CUR_DIR" || return
 }
 
 function pull() {
-    cd "$DOTDIR" || exit
+    cd "$DOTDIR" || return
     git pull
-    cd "$CUR_DIR" || exit
+    cd "$CUR_DIR" || return
 }
 
 function reload() {
@@ -46,7 +46,7 @@ function reload() {
         return
     fi
 
-    cd "$DOTDIR" || exit
+    cd "$DOTDIR" || return
     if [[ $1 = "all" ]]; then
         for i in $(ls -d */); do
             echo -e "Reloading ${BLUE}${i%%/}${NC}"
@@ -56,7 +56,7 @@ function reload() {
         echo -e "Reloading ${BLUE}$1${NC}"
         stow "$1" -v
     fi
-    cd "$CUR_DIR" || exit
+    cd "$CUR_DIR" || return
 }
 
 function add() {
@@ -101,9 +101,9 @@ function add() {
             mkdir -p "$DOTDIR/$pkg"
         fi
         mv "$src" "$DOTDIR/$pkg/$what"
-        cd "$DOTDIR" || exit
+        cd "$DOTDIR" || return
         stow "$pkg" -v
-        cd "$CUR_DIR" || exit
+        cd "$CUR_DIR" || return
     fi
 
 }
