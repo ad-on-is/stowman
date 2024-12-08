@@ -31,6 +31,7 @@ function init() {
     maybeCreateDir
     cd "$DOTDIR" || exit
     git clone "$1"
+    cd "$CUR_DIR" || exit
 }
 
 function pull() {
