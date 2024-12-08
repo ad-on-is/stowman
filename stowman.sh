@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-set -euxo pipefail
+set -euo pipefail
 
-DOTDIR="$HOME/.dotfiles"
+DOTDIR="${STOWMAN_DOTDIR:-$HOME/.dotfiles}"
 
 BLUE='\033[0;34m'
 YELLOW='\033[0;33m'
@@ -10,10 +10,6 @@ GREEN='\033[0;32m'
 PINK='\033[0;35m'
 RED='\033[0;31m'
 NC='\033[0m'
-
-if [[ -n "${STOWMAN_DOTDIR}" ]]; then
-    DOTDIR="${STOWMAN_DOTDIR}"
-fi
 
 stowcmd="stow -d $DOTDIR -t $HOME -v"
 gitcmd="git -C $DOTDIR"
