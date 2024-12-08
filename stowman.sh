@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euxo pipefail
+
 DOTDIR="$HOME/.dotfiles"
 
 BLUE='\033[0;34m'
