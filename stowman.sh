@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTDIR="$HOME/dotfiles"
+DOTDIR="$HOME/.dotfiles"
 
 BLUE='\033[0;34m'
 YELLOW='\033[0;33m'
