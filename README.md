@@ -17,10 +17,6 @@ curl -L https://raw.githubusercontent.com/ad-on-is/stowman/refs/heads/main/stowm
 chmod +x ~/.local/bin/stowman.sh
 ```
 
-```
-
-```
-
 ## Usage
 
 ### On your current maschine
