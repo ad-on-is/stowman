@@ -1,4 +1,4 @@
-# STOWMAN
+# stowman.sh
 
 ```bash
    _==_ _
@@ -7,8 +7,6 @@
 __( :  )|_  Manage your dotfiles easily.
 
 ```
-
-stowman.sh lets you easily manage your dotfiles using git and GNU stow.
 
 ## Installation
 
