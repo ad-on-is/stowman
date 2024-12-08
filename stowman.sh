@@ -24,6 +24,10 @@ function maybeCreateDir() {
 }
 
 function init() {
+    if [[ -z "$1" ]]; then
+        usage
+        return
+    fi
     maybeCreateDir
     cd "$DOTDIR" || exit
     git clone "$1"
@@ -36,6 +40,11 @@ function pull() {
 }
 
 function reload() {
+    if [[ -z "$1" ]]; then
+        usage
+        return
+    fi
+
     cd "$DOTDIR" || exit
     if [[ $1 = "all" ]]; then
         for i in $(ls -d */); do
@@ -50,6 +59,11 @@ function reload() {
 }
 
 function add() {
+    if [[ -z "$1" || -z "$2" ]]; then
+        usage
+        return
+    fi
+
     src=$1
     pkg=$2
 
@@ -94,7 +108,7 @@ function add() {
 }
 
 function usage() {
-    echo -e "Invalid operation. Use ${GREEN}--help${NC} for help."
+    echo -e "Invalid operation. Use stowman.sh ${PINK}--help${NC} for help."
 }
 
 function help() {
