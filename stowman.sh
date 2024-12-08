@@ -9,14 +9,17 @@ PINK='\033[0;35m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-CUR_DIR=$(pwd)
+if [[ -n "$STOWMAN_DOTDIR" ]]; then
+    DOTDIR="$STOWMAN_DOTDIR"
+fi
+
+stowcmd="stow -d $DOTDIR -t $HOME -v"
+gitcmd="git -C $DOTDIR"
 
 function push() {
-    cd "$DOTDIR" || return
-    git add .
-    git commit -am "changes"
-    git push
-    cd "$CUR_DIR" || return
+    eval "$gitcmd add ."
+    eval "$gitcmd commit -am changes"
+    eval "$gitcmd push"
 }
 
 function maybeCreateDir() {
@@ -29,15 +32,11 @@ function init() {
         return
     fi
     maybeCreateDir
-    cd "$DOTDIR" || return
-    git clone "$1"
-    cd "$CUR_DIR" || return
+    git clone "$1" "$DOTDIR"
 }
 
 function pull() {
-    cd "$DOTDIR" || return
-    git pull
-    cd "$CUR_DIR" || return
+    eval "$gitcmd pull"
 }
 
 function reload() {
@@ -46,17 +45,17 @@ function reload() {
         return
     fi
 
-    cd "$DOTDIR" || return
     if [[ $1 = "all" ]]; then
-        for i in $(ls -d */); do
+        for i in "$DOTDIR"/*; do
+            if [[ ! -d "$i" ]]; then continue; fi
+            i="${i/$DOTDIR\/''/}"
             echo -e "Reloading ${BLUE}${i%%/}${NC}"
-            stow "${i%%/}" -v
+            eval "$stowcmd ${i%%/}"
         done
     else
         echo -e "Reloading ${BLUE}$1${NC}"
-        stow "$1" -v
+        eval "$stowcmd $1"
     fi
-    cd "$CUR_DIR" || return
 }
 
 function add() {
@@ -69,7 +68,7 @@ function add() {
     pkg=$2
 
     if [[ ! -e "$DOTDIR" ]]; then
-        echo -e "$DOTDIR ${RED}not found!${NC}. Please run ${BLUE}init${NC} or ${BLUE}connect${NC} first."
+        echo -e "$DOTDIR ${RED}not found!${NC}. Please run ${BLUE}init${NC} first."
     fi
 
     if [[ "$src" = "." ]]; then
@@ -101,9 +100,7 @@ function add() {
             mkdir -p "$DOTDIR/$pkg"
         fi
         mv "$src" "$DOTDIR/$pkg/$what"
-        cd "$DOTDIR" || return
-        stow "$pkg" -v
-        cd "$CUR_DIR" || return
+        eval "$stowcmd $pkg"
     fi
 
 }
@@ -179,9 +176,6 @@ pull)
     ;;
 reload)
     reload "$2"
-    ;;
-connect)
-    connect "$2"
     ;;
 init)
     init "$2"
