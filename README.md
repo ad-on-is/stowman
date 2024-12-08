@@ -10,6 +10,17 @@ __( :  )|_  Manage your dotfiles easily.
 
 stowman.sh lets you easily manage your dotfiles using git and GNU stow.
 
+## Installation
+
+```bash
+curl -L https://raw.githubusercontent.com/ad-on-is/stowman/refs/heads/main/stowman.sh > ~/.local/bin/stowman.sh
+chmod +x ~/.local/bin/stowman.sh
+```
+
+```
+
+```
+
 ## Usage
 
 ### On your current maschine
