@@ -104,8 +104,8 @@ function add() {
     if [[ ! -e "$to" ]]; then
       mkdir -p "$to"
     fi
-    # mv "$from" "$to/"
-    # eval "$stowcmd $pkg"
+    mv "$from" "$to/"
+    eval "$stowcmd $pkg"
   fi
 
 }
