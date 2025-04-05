@@ -3,6 +3,7 @@
 set -eo pipefail
 
 DOTDIR="${STOWMAN_DOTDIR:-$HOME/.dotfiles}"
+HOMEDIR="$HOME"
 
 BLUE='\033[0;34m'
 YELLOW='\033[0;33m'
@@ -11,7 +12,7 @@ PINK='\033[0;35m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-stowcmd="stow -d $DOTDIR -t $HOME -v"
+stowcmd="stow -d $DOTDIR -t $HOMEDIR -v"
 gitcmd="git -C $DOTDIR"
 
 function push() {
@@ -50,7 +51,7 @@ function reload() {
   if [[ $1 = "all" ]]; then
     for i in "$DOTDIR"/*; do
       if [[ ! -d "$i" ]]; then continue; fi
-      i="${i/$DOTDIR\/''/}"
+      i="$(basename "$i")"
       echo -e "Reloading ${BLUE}${i%%/}${NC}"
       eval "$stowcmd ${i%%/}"
     done
@@ -110,6 +111,34 @@ function add() {
 
 }
 
+function list() {
+  for p in "$DOTDIR"/*; do
+    if [[ ! -d "$p" ]]; then continue; fi
+    r=$p
+    p="$(basename "$p")"
+    echo -e "${BLUE}[${p%%/}]${NC}"
+    shopt -s dotglob
+    for i in "$r"/*; do
+      if [[ -d "$i" ]]; then
+        for s in "$i"/*; do
+          echo -e "  ${YELLOW}$HOMEDIR/${NC}$(basename "$i")/$(basename "$s")"
+          # i="${i/$DOTDIR\/''/}"
+          # echo -e "\t${BLUE}${i%%/}${NC}"
+        done
+
+      else
+        echo -e "  ${YELLOW}$HOMEDIR/${NC}$(basename "$i")"
+
+      fi
+      # i="${i/$DOTDIR\/''/}"
+      # echo -e "\t${BLUE}${i%%/}${NC}"
+    done
+    shopt -u dotglob
+
+  done
+
+}
+
 function usage() {
   echo -e "Invalid operation. Use stowman.sh ${PINK}--help${NC} for help."
 }
@@ -162,6 +191,9 @@ EOF
   echo -e "stowman.sh ${PINK}reload${NC} all"
   echo -e "stowman.sh ${PINK}reload${NC} packagename"
   echo
+  echo -e "${BLUE}List stowed files and folders${NC}"
+  echo -e "stowman.sh ${PINK}list${NC}"
+  echo
 }
 
 if [[ ! -e "$DOTDIR" ]]; then
@@ -182,10 +214,13 @@ pull)
 reload)
   reload "$2"
   ;;
+list)
+  list
+  ;;
 init)
   init "$2"
   ;;
---help)
+help)
   help
   ;;
 *)
