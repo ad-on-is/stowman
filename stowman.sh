@@ -140,7 +140,7 @@ function list() {
 }
 
 function usage() {
-  echo -e "Invalid operation. Use stowman.sh ${PINK}--help${NC} for help."
+  echo -e "Invalid operation. Use stowman.sh ${PINK}help${NC} for help."
 }
 
 function help() {
