@@ -3,7 +3,7 @@
 set -eo pipefail
 
 DOTDIR="${STOWMAN_DOTDIR:-$HOME/.dotfiles}"
-HOMEDIR="$HOME"
+HOMEDIR="${STOWMAN_HOMEDIR:-$HOME}"
 
 BLUE='\033[0;34m'
 YELLOW='\033[0;33m'
