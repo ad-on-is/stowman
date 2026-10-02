@@ -82,9 +82,15 @@ function add() {
     src=$(pwd)/$src
   fi
 
-  what=$src
-  what=$(echo "$what" | sed -e "s/~\///g")
-  what=$(echo "$what" | sed -e "s/\/home\/$(whoami)\///g")
+  case "$src" in
+    "$HOMEDIR"/*)
+      what="${src#"$HOMEDIR"/}"
+      ;;
+    *)
+      printf 'Source must be inside %s\n' "$HOMEDIR" >&2
+      return 1
+      ;;
+  esac
 
   if [[ ! -e "$src" ]]; then
     echo
